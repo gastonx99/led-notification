@@ -24,8 +24,8 @@ String query1 =
             "  FROM ABC          " +
             " WHERE BAR > 4      ";
 
-    public static void main(String[] args) {
-        try {
+public static void main(String[] args) {
+try {
             BroadcastSandboxListener listener = new BroadcastSandboxListener();
             listener.listen();
         } catch (Exception e) {
