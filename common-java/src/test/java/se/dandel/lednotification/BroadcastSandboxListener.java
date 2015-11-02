@@ -12,6 +12,20 @@ public class BroadcastSandboxListener {
     private final Logger logger = Logger.getLogger(getClass());
     private MulticastSocket socket;
 
+    // @formatter:off
+    String query1 =
+            "SELECT FOO, BAR, BAZ" +
+            "  FROM ABC          " +
+            " WHERE BAR > 4      ";
+    // @formatter:on
+
+    // @formatter:off
+    String query =
+            "SELECT FOO, BAR, BAZ" +
+            "  FROM ABC          " +
+            " WHERE BAR > 4      ";
+    // @formatter:on
+
     public static void main(String[] args) {
         try {
             BroadcastSandboxListener listener = new BroadcastSandboxListener();
