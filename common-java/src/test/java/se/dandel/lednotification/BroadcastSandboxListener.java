@@ -4,12 +4,13 @@ import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BroadcastSandboxListener {
+    private Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String GROUP_IPADDRESS = "224.6.0.0";
     private static final int PORT = 5001;
-    private final Logger logger = Logger.getLogger(getClass());
     private MulticastSocket socket;
 
     public static void main(String[] args) {
@@ -31,10 +32,10 @@ public class BroadcastSandboxListener {
         byte[] buf = new byte[512];
         DatagramPacket packet = new DatagramPacket(buf, buf.length);
         while (true) {
-            logger.info("Waiting for data");
+            LOGGER.info("Waiting for data");
             socket.receive(packet);
             String message = new String(buf, "UTF8");
-            logger.info("Data received: " + message);
+            LOGGER.info("Data received: " + message);
         }
     }
 

@@ -4,14 +4,15 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BroadcastSandboxPublisher {
+    private Logger LOGGER = LoggerFactory.getLogger(getClass());
     private static final String GROUP_IPADDRESS = "224.6.0.0";
     private static final int PORT = 5001;
-    private final Logger logger = Logger.getLogger(getClass());
     private DatagramSocket socket;
     private InetAddress group;
 
@@ -33,7 +34,7 @@ public class BroadcastSandboxPublisher {
     }
 
     private void send(String message) throws Exception {
-        logger.info("Sending message: " + message);
+        LOGGER.info("Sending message: " + message);
 
         byte[] buf = message.getBytes("UTF8");
         DatagramPacket packet = new DatagramPacket(buf, buf.length, group, PORT);
