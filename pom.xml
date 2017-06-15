@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <url>${site.base.url}/rtb</url>
 
     <groupId>se.dandel.lednotification</groupId>
     <artifactId>lednotification</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>pom</packaging>
 
     <name>led-notification</name>
+    <packaging>pom</packaging>
 
     <prerequisites>
         <maven>3.2.2</maven>
     </prerequisites>
 
     <properties>
-		<site.base.url>http://www.dandel.se/led-notification</site.base.url>
-		<scm.base.url>https://github.com/gastonx99</scm.base.url>
+        <site.base.url>http://www.dandel.se/led-notification</site.base.url>
+        <scm.base.url>https://github.com/gastonx99</scm.base.url>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <modules>
         <module>local-tools</module>
         <module>common-java</module>
+        <module>testclient</module>
     </modules>
     <dependencyManagement>
         <dependencies>
             <!-- Modules -->
             <dependency>
-				<groupId>se.dandel.lednotification</groupId>
+                <groupId>se.dandel.lednotification</groupId>
                 <artifactId>common-java</artifactId>
                 <version>1.0-SNAPSHOT</version>
             </dependency>
@@ -38,12 +37,17 @@
             <dependency>
                 <groupId>com.google.inject</groupId>
                 <artifactId>guice</artifactId>
-                <version>3.0</version>
+                <version>4.1.0</version>
             </dependency>
             <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>1.2.17</version>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.25</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.25</version>
             </dependency>
             <dependency>
                 <groupId>commons-io</groupId>
