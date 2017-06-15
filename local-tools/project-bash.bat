@@ -1,9 +1,8 @@
 @echo off
 
-set GIT_HOME=E:\Program\PortableGit-1.9.4-preview20140929
+SET CURRENTDIR="%~dp0"
+call %CURRENTDIR%\project-setenv.bat
 
-set ROOT_DIR=%~dp0\..
+start %BASH_HOME%\git-bash.exe
 
-cd %ROOT_DIR%
-
-%GIT_HOME%\git-bash.bat
+exit
