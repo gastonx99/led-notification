@@ -1,0 +1,6 @@
+package se.dandel.lednotification;
+
+public enum NotificationType {
+
+    INCOMING_CALL, MISSED_CALL, DENIED_CALL, ANSWERED_CALL, DISMISSED_NOTIFICATION, ENTERING_HOME, LEAVING_HOME, NEW_NOTIFICATION;
+}

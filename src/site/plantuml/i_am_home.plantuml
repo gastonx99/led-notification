@@ -1,0 +1,28 @@
+@startuml
+
+!include style_sequence_diagram.iuml
+
+participant Droid
+participant Led
+
+Droid -> Led : Droid is home
+Led -> Led : Register Droid
+Led -> Droid : Welcome Droid
+Droid -> Droid : Register Led active
+Droid -> Led : Send notifications
+Led -> Led : Register notifications
+...
+Droid -> Led : I'm @home
+Led -> Led : Register Droid
+Led -> Droid : Nice
+Droid -> Droid : Register Led active
+...
+Droid -> Droid : Leaving home
+...
+Led -> Led : No @home calls
+Led -> Led : Clear all notifications
+
+
+
+
+@enduml

@@ -1,0 +1,15 @@
+skinparam backgroundColor #EEEBDC
+skinparam handwritten true
+skinparam sequence {
+    ArrowColor DeepSkyBlue
+    ActorBorderColor DeepSkyBlue
+    LifeLineBorderColor blue
+    LifeLineBackgroundColor #A9DCDF
+    ParticipantBorderColor DeepSkyBlue
+    ParticipantBackgroundColor DodgerBlue
+    ParticipantFontName Impact
+    ParticipantFontSize 14
+    ParticipantFontColor #A9DCDF
+    GroupBackgroundColor #A9DCDF
+    GroupBorderColor #DodgerBlue
+}

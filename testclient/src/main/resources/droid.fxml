@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<VBox fx:controller="DroidController"
+      fx:id="rootPane"
+      xmlns:fx="http://javafx.com/fxml">
+    <padding>
+        <Insets top="25" right="25" bottom="10" left="25"/>
+    </padding>
+    <Text text="Droid notification simulator"/>
+
+
+    <!-- Home buttons -->
+    <GridPane alignment="center" hgap="10" vgap="10">
+        <padding>
+            <Insets top="10" right="25" bottom="10" left="25"/>
+        </padding>
+
+        <Text text="Home/Away"
+              GridPane.columnIndex="0" GridPane.rowIndex="0"
+              GridPane.columnSpan="2"/>
+        <Button fx:id="comingHomeButton"
+                text="Coming home"
+                GridPane.columnIndex="0" GridPane.rowIndex="1"
+                onAction="#handleComingHomeAction"/>
+
+        <Button fx:id="leavingHomeButton"
+                text="Leaving home"
+                disable="true"
+                GridPane.columnIndex="1" GridPane.rowIndex="1"
+                onAction="#handleLeavingHomeAction"/>
+
+    </GridPane>
+
+    <Separator/>
+
+    <!-- Call buttons -->
+    <GridPane alignment="center" hgap="10" vgap="10">
+        <padding>
+            <Insets top="10" right="25" bottom="10" left="25"/>
+        </padding>
+
+        <Text text="Phone"
+              GridPane.columnIndex="0" GridPane.rowIndex="0"
+              GridPane.columnSpan="2"/>
+        <Button fx:id="incomingCallButton"
+                text="Incoming call"
+                GridPane.columnIndex="0" GridPane.rowIndex="1"
+                onAction="#handleIncomingCallAction"/>
+
+        <Button fx:id="acceptCallButton"
+                text="Accept call"
+                GridPane.columnIndex="1" GridPane.rowIndex="1"
+                disable="true"
+                onAction="#handleAcceptCallAction"/>
+
+        <Button fx:id="denyCallButton"
+                text="Deny call"
+                GridPane.columnIndex="0" GridPane.rowIndex="2"
+                disable="true"
+                onAction="#handleDenyCallAction"/>
+
+        <Button fx:id="missedCallButton"
+                text="Miss call"
+                GridPane.columnIndex="1" GridPane.rowIndex="2"
+                disable="true"
+                onAction="#handleMissedCallAction"/>
+
+    </GridPane>
+
+    <Separator/>
+
+    <GridPane alignment="center" hgap="10" vgap="10">
+        <padding>
+            <Insets top="10" right="25" bottom="10" left="25"/>
+        </padding>
+
+        <Text text="Active LEDs"
+              GridPane.columnIndex="0" GridPane.rowIndex="0"
+              GridPane.columnSpan="2"/>
+        <HBox fx:id="ledIndicatorBox"
+              GridPane.columnSpan="2"
+              GridPane.columnIndex="0" GridPane.rowIndex="1">
+        </HBox>
+    </GridPane>
+
+    <Separator/>
+
+    <!-- Notification buttons -->
+    <GridPane alignment="center" hgap="10" vgap="10">
+        <padding>
+            <Insets top="10" right="25" bottom="10" left="25"/>
+        </padding>
+        <Text text="Notifications"
+              GridPane.columnIndex="0" GridPane.rowIndex="0"
+              GridPane.columnSpan="2"/>
+        <ToggleButton fx:id="callNotificationButton"
+                      text="Calls"
+                      GridPane.columnIndex="0" GridPane.rowIndex="1"
+                      onAction="#handleCallNotificationAction"
+        />
+        <ToggleButton fx:id="mailNotificationButton"
+                      text="Mail"
+                      GridPane.columnIndex="1" GridPane.rowIndex="1"
+                      onAction="#handleMailNotificationAction"
+        />
+        <ToggleButton fx:id="messNotificationButton"
+                      text="Mess"
+                      GridPane.columnIndex="2" GridPane.rowIndex="1"
+                      onAction="#handleMessNotificationAction"
+        />
+        <ToggleButton fx:id="facebookNotificationButton"
+                      text="Facebook"
+                      GridPane.columnIndex="3" GridPane.rowIndex="1"
+                      onAction="#handleFacebookNotificationAction"
+        />
+    </GridPane>
+
+</VBox>

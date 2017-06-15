@@ -1,0 +1,27 @@
+@startuml
+
+!include style_sequence_diagram.iuml
+
+participant DROID
+participant LED
+
+DROID -> DROID : Incoming call
+DROID -> LED : Incoming call
+LED -> LED : Register [INCOMING_CALL]
+alt Missed call
+DROID -> LED : Missed call
+LED -> LED : Register [MISSED_CALL]
+else Answered call
+DROID -> LED : Answered  call
+else Denied call
+DROID -> LED : Denied call
+end alt
+LED -> LED : Clear [INCOMING_CALL]
+...
+DROID->DROID : Dismiss missed call
+DROID -> LED : Dismiss missed call
+LED -> LED : Clear [MISSED_CALL]
+
+
+
+@enduml
