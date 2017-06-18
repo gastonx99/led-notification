@@ -1,4 +1,4 @@
-/**
+package se.dandel.lednotification.droid; /**
  * Created by gaston on 2017-06-13.
  */
 
@@ -22,11 +22,11 @@ public class Droid extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("droid.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/droid.fxml"));
 
         Scene scene = new Scene(root, 500, 400);
 
-        stage.setTitle("Droid notification simulator");
+        stage.setTitle("se.dandel.lednotification.droid.Droid notification simulator");
         stage.setScene(scene);
         stage.show();
     }

@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<VBox fx:controller="DroidController"
+<VBox fx:controller="se.dandel.lednotification.droid.DroidController"
       fx:id="rootPane"
       xmlns:fx="http://javafx.com/fxml">
     <padding>

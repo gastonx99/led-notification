@@ -3,8 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.*?>
-<GridPane fx:controller="ButtonController"
-          fx:id="rootPane"
+<GridPane fx:controller="se.dandel.lednotification.button.ButtonController"
           alignment="center" hgap="10" vgap="10"
           xmlns:fx="http://javafx.com/fxml">
     <padding>
@@ -13,61 +12,57 @@
 
     <!-- North -->
     <Circle fx:id="westnorthwest"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="0" GridPane.columnIndex="0"/>
 
     <Circle fx:id="northnorthwest"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="0" GridPane.columnIndex="1"/>
 
     <Circle fx:id="north"
             radius="20" fill="black" stroke="black" strokeWidth="2"
-            onMouseClicked="#handleNorthClicked"
             style="-fx-cursor: hand;"
             GridPane.rowIndex="0" GridPane.columnIndex="2"/>
 
     <Circle fx:id="northnortheast"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="0" GridPane.columnIndex="3"/>
 
     <Circle fx:id="eastnortheast"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="0" GridPane.columnIndex="4"/>
 
     <!-- West/East -->
     <Circle fx:id="west"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="2"
-            onMouseClicked="#handleWestClicked"
+            radius="20" fill="transparent" stroke="black" strokeWidth="2"
             style="-fx-cursor: hand;"
             GridPane.rowIndex="1" GridPane.columnIndex="0"/>
 
     <Circle fx:id="east"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="2"
-            onMouseClicked="#handleEastClicked"
+            radius="20" fill="transparent" stroke="black" strokeWidth="2"
             style="-fx-cursor: hand;"
             GridPane.rowIndex="1" GridPane.columnIndex="4"/>
 
     <!-- South -->
     <Circle fx:id="westsouthwest"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="2" GridPane.columnIndex="0"/>
 
     <Circle fx:id="southsouthwest"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="2" GridPane.columnIndex="1"/>
 
     <Circle fx:id="south"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="2"
-            onMouseClicked="#handleSouthClicked"
+            radius="20" fill="transparent" stroke="black" strokeWidth="2"
             style="-fx-cursor: hand;"
             GridPane.rowIndex="2" GridPane.columnIndex="2"/>
 
     <Circle fx:id="southsoutheast"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="2" GridPane.columnIndex="3"/>
 
     <Circle fx:id="eastsoutheast"
-            radius="20" fill="antiquewhite" stroke="black" strokeWidth="1"
+            radius="20" fill="transparent" stroke="black" strokeWidth="1"
             GridPane.rowIndex="2" GridPane.columnIndex="4"/>
 
 </GridPane>

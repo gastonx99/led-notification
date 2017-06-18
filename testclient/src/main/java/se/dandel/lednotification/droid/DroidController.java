@@ -1,3 +1,5 @@
+package se.dandel.lednotification.droid;
+
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Module;
@@ -9,10 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import se.dandel.lednotification.BroadcastingNotificationSender;
-import se.dandel.lednotification.NotificationSender;
-import se.dandel.lednotification.NotificationService;
-import se.dandel.lednotification.NotificationSource;
+import se.dandel.lednotification.*;
 
 public class DroidController {
     @FXML
@@ -85,41 +84,42 @@ public class DroidController {
         service.callMissed(source);
         missedCallButton.setCancelButton(false);
         callNotificationButton.setSelected(true);
+        service.newNotification(source, EventPriority.CRITICAL);
     }
 
     public void handleFacebookNotificationAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
         if (facebookNotificationButton.isSelected()) {
-            service.newNotification(source);
+            service.newNotification(source, EventPriority.LOW);
         } else {
-            service.dismissNotification(source);
+            service.dismissNotification(source, EventPriority.LOW);
         }
     }
 
     public void handleCallNotificationAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
         if (callNotificationButton.isSelected()) {
-            service.newNotification(source);
+            service.newNotification(source, EventPriority.CRITICAL);
         } else {
-            service.dismissNotification(source);
+            service.dismissNotification(source, EventPriority.CRITICAL);
         }
     }
 
     public void handleMailNotificationAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
         if (mailNotificationButton.isSelected()) {
-            service.newNotification(source);
+            service.newNotification(source, EventPriority.MEDIUM);
         } else {
-            service.dismissNotification(source);
+            service.dismissNotification(source, EventPriority.MEDIUM);
         }
     }
 
     public void handleMessNotificationAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
         if (messNotificationButton.isSelected()) {
-            service.newNotification(source);
+            service.newNotification(source,EventPriority.HIGH);
         } else {
-            service.dismissNotification(source);
+            service.dismissNotification(source, EventPriority.HIGH);
         }
     }
 

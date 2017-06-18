@@ -21,6 +21,10 @@ public class BroadcastingNotificationSender implements NotificationSender {
         builder.append("source=" + notification.getSource().getSource());
         builder.append(";");
         builder.append("type=" + notification.getNotificationType());
+        if(notification.getPriority() != null) {
+            builder.append(";");
+            builder.append("priority=" + notification.getPriority());
+        }
         send(builder.toString());
     }
 

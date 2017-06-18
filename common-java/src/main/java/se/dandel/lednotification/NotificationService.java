@@ -35,14 +35,14 @@ public class NotificationService {
         notificationSender.send(notification);
     }
 
-    public void newNotification(NotificationSource source) {
-        Notification notification = Notification.newNotification(source);
+    public void newNotification(NotificationSource source, EventPriority priority) {
+        Notification notification = Notification.newNotification(source, priority);
         LOGGER.debug("Show notification {}", notification);
         notificationSender.send(notification);
     }
 
-    public void dismissNotification(NotificationSource source) {
-        Notification notification = Notification.dismissedNotification(source);
+    public void dismissNotification(NotificationSource source, EventPriority priority) {
+        Notification notification = Notification.dismissedNotification(source, priority);
         LOGGER.debug("Dismiss notification {}", notification);
         notificationSender.send(notification);
     }
