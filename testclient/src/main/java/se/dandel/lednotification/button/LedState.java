@@ -12,11 +12,6 @@ public class LedState {
 
     private int[] priorityNotifications = new int[EventPriority.values().length];
 
-    private int criticalPriorityNotifications;
-    private int highPriorityNotifications;
-    private int mediumPriorityNotifications;
-    private int lowPriorityNotifications;
-
     public void setAlertOn(boolean alertOn) {
         this.alertOn = alertOn;
     }
@@ -41,52 +36,16 @@ public class LedState {
         this.alert = alert;
     }
 
-    public boolean isCriticalPriorityNotification() {
-        return criticalPriorityNotifications > 0;
+    public boolean isPriorityNotification(EventPriority priority) {
+        return priorityNotifications[priority.ordinal()] > 0;
     }
 
-    public void increaseCriticalPriorityNotifications() {
-        this.criticalPriorityNotifications++;
+    public void increasePriorityNotifications(EventPriority priority) {
+        this.priorityNotifications[priority.ordinal()]++;
     }
 
-    public void decreaseCriticalPriorityNotifications() {
-        this.criticalPriorityNotifications--;
-    }
-
-    public boolean isHighPriorityNotification() {
-        return highPriorityNotifications > 0;
-    }
-
-    public void increaseHighPriorityNotifications() {
-        this.highPriorityNotifications++;
-    }
-
-    public void decreaseHighPriorityNotifications() {
-        this.highPriorityNotifications--;
-    }
-
-    public boolean isMediumPriorityNotification() {
-        return mediumPriorityNotifications > 0;
-    }
-
-    public void increaseMediumPriorityNotifications() {
-        this.mediumPriorityNotifications++;
-    }
-
-    public void decreaseMediumPriorityNotifications() {
-        this.mediumPriorityNotifications--;
-    }
-
-    public boolean isLowPriorityNotification() {
-        return lowPriorityNotifications > 0;
-    }
-
-    public void increaseLowPriorityNotifications() {
-        this.lowPriorityNotifications++;
-    }
-
-    public void decreaseLowPriorityNotifications() {
-        this.lowPriorityNotifications--;
+    public void decreasePriorityNotifications(EventPriority priority) {
+        this.priorityNotifications[priority.ordinal()]--;
     }
 
     @Override

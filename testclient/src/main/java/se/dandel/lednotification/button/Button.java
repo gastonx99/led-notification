@@ -19,8 +19,8 @@ import java.util.concurrent.Executors;
 import static java.lang.Thread.sleep;
 
 public class Button extends Application {
-    public static final int FAST_BLINK_MILLIS = 1000;
-    private static final long SLOW_BLINK_MILLIS = 2000;
+    public static final int ALERT_BLINK_MILLIS = 1000;
+    private static final long NOTIFICATION_BLINK_MILLIS = 2000;
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
     private ButtonController controllerHandle;
 
@@ -80,8 +80,8 @@ public class Button extends Application {
 
     private final byte[] buffer = new byte[512];
     private final LedState ledState = new LedState();
-    private long lastFastBlinkTime = System.currentTimeMillis();
-    private long lastSlowBlinkTime = System.currentTimeMillis();
+    private long lastAlertBlinkTime = System.currentTimeMillis();
+    private long lastNotificationBlinkTime = System.currentTimeMillis();
 
 
     private void innerLoop() throws Exception {
@@ -90,19 +90,19 @@ public class Button extends Application {
             udp.read(buffer, available);
             String eventStr = new String(buffer, 0, available, "UTF8");
             LOGGER.debug("Event received: " + eventStr);
-            Event event = parseNotification(eventStr);
+            Event event = parseEvent(eventStr);
             LOGGER.debug("Event {}", event);
-            updateButtonState(event);
+            updateLedState(event);
         }
 
         long currentTimeMillis = System.currentTimeMillis();
-        if (lastFastBlinkTime + FAST_BLINK_MILLIS < currentTimeMillis) {
+        if (lastAlertBlinkTime + ALERT_BLINK_MILLIS < currentTimeMillis) {
             ledState.setAlertOn(!ledState.isAlertOn());
-            lastFastBlinkTime = currentTimeMillis;
+            lastAlertBlinkTime = currentTimeMillis;
         }
-        if (lastSlowBlinkTime + SLOW_BLINK_MILLIS < currentTimeMillis) {
+        if (lastNotificationBlinkTime + NOTIFICATION_BLINK_MILLIS < currentTimeMillis) {
             ledState.setNotificationOn(!ledState.isNotificationOn());
-            lastSlowBlinkTime = currentTimeMillis;
+            lastNotificationBlinkTime = currentTimeMillis;
         }
 
         if (!ledState.isAlert() && ledState.isAlertOn()) {
@@ -110,18 +110,18 @@ public class Button extends Application {
             b.allLedsOff();
         }
         if (ledState.isAlert()) {
-            handleIncomingCall();
+            handleAlert();
         } else {
-            if (ledState.isCriticalPriorityNotification()) {
+            if (ledState.isPriorityNotification(EventPriority.CRITICAL)) {
                 handleCriticalPriority();
             }
-            if (ledState.isHighPriorityNotification()) {
+            if (ledState.isPriorityNotification(EventPriority.HIGH)) {
                 handleHighPriority();
             }
-            if (ledState.isMediumPriorityNotification()) {
+            if (ledState.isPriorityNotification(EventPriority.MEDIUM)) {
                 handleMediumPriority();
             }
-            if (ledState.isLowPriorityNotification()) {
+            if (ledState.isPriorityNotification(EventPriority.LOW)) {
                 handleLowPriority();
             }
         }
@@ -183,7 +183,7 @@ public class Button extends Application {
         }
     }
 
-    private void handleIncomingCall() {
+    private void handleAlert() {
         if (ledState.isAlertOn()) {
             b.allLedsOn(255, 0, 0);
         } else {
@@ -191,7 +191,7 @@ public class Button extends Application {
         }
     }
 
-    private void updateButtonState(Event event) {
+    private void updateLedState(Event event) {
         switch (event.getType()) {
             case NEW_ALERT:
                 ledState.setAlert(true);
@@ -200,36 +200,10 @@ public class Button extends Application {
                 ledState.setAlert(false);
                 break;
             case NEW_NOTIFICATION:
-                switch(event.getPriority()) {
-                    case CRITICAL:
-                        ledState.increaseCriticalPriorityNotifications();
-                        break;
-                    case HIGH:
-                        ledState.increaseHighPriorityNotifications();
-                        break;
-                    case MEDIUM:
-                        ledState.increaseMediumPriorityNotifications();
-                        break;
-                    case LOW:
-                        ledState.increaseLowPriorityNotifications();
-                        break;
-                }
+                ledState.increasePriorityNotifications(event.getPriority());
                 break;
             case CANCEL_NOTIFICATION:
-                switch(event.getPriority()) {
-                    case CRITICAL:
-                        ledState.decreaseCriticalPriorityNotifications();
-                        break;
-                    case HIGH:
-                        ledState.decreaseHighPriorityNotifications();
-                        break;
-                    case MEDIUM:
-                        ledState.decreaseMediumPriorityNotifications();
-                        break;
-                    case LOW:
-                        ledState.decreaseLowPriorityNotifications();
-                        break;
-                }
+                ledState.decreasePriorityNotifications(event.getPriority());
                 break;
             default:
                 break;
@@ -241,11 +215,10 @@ public class Button extends Application {
         super.stop();
         LOGGER.debug("Shutting down initiated");
         internetButtonExecutor.shutdownNow();
-//        socket.close();
         LOGGER.debug("Shutting down completed");
     }
 
-    private Event parseNotification(String message) {
+    private Event parseEvent(String message) {
         String[] split = message.split(";");
         EventSource source = new EventSource(split[0].split("=")[1]);
         EventType type = EventType.valueOf(split[1].split("=")[1]);
