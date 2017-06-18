@@ -7,7 +7,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 
-public class BroadcastingNotificationSender implements NotificationSender {
+public class BroadcastingAlertSender implements AlertSender {
     private static final String GROUP_IPADDRESS = "224.6.0.0";
     private static final int PORT = 5001;
 
@@ -16,14 +16,14 @@ public class BroadcastingNotificationSender implements NotificationSender {
     private InetAddress group;
 
     @Override
-    public void send(Notification notification) {
+    public void send(Event event) {
         StringBuilder builder = new StringBuilder();
-        builder.append("source=" + notification.getSource().getSource());
+        builder.append("source=" + event.getSource().getSource());
         builder.append(";");
-        builder.append("type=" + notification.getNotificationType());
-        if(notification.getPriority() != null) {
+        builder.append("type=" + event.getType());
+        if(event.getPriority() != null) {
             builder.append(";");
-            builder.append("priority=" + notification.getPriority());
+            builder.append("priority=" + event.getPriority());
         }
         send(builder.toString());
     }

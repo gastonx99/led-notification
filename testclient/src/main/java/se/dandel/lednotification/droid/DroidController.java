@@ -39,18 +39,18 @@ public class DroidController {
     @FXML
     private Button missedCallButton;
 
-    private NotificationService service;
+    private SmartPhoneAlertService service;
     private Circle circleLed1;
-    private NotificationSource source = new NotificationSource("DROID TEST CLIENT");
+    private EventSource source = new EventSource("DROID TEST CLIENT");
 
     public DroidController() {
         Module module = new AbstractModule() {
             @Override
             protected void configure() {
-                bind(NotificationSender.class).to(BroadcastingNotificationSender.class);
+                bind(AlertSender.class).to(BroadcastingAlertSender.class);
             }
         };
-        this.service = Guice.createInjector(module).getInstance(NotificationService.class);
+        this.service = Guice.createInjector(module).getInstance(SmartPhoneAlertService.class);
     }
 
     @FXML
@@ -128,7 +128,7 @@ public class DroidController {
         comingHomeButton.disableProperty().set(true);
         leavingHomeButton.disableProperty().set(false);
         activateLeds();
-        service.enteringHome(source);
+        service.enteringWifi(source);
     }
 
     public void handleLeavingHomeAction(ActionEvent actionEvent) {
@@ -136,7 +136,7 @@ public class DroidController {
         comingHomeButton.disableProperty().set(false);
         leavingHomeButton.disableProperty().set(true);
         inactivateLeds();
-        service.leavingHome(source);
+        service.leavingWifi(source);
     }
 
     private void inactivateLeds() {

@@ -7,13 +7,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import se.dandel.lednotification.Event;
 import se.dandel.lednotification.EventPriority;
-import se.dandel.lednotification.Notification;
-import se.dandel.lednotification.NotificationSource;
-import se.dandel.lednotification.NotificationType;
+import se.dandel.lednotification.EventSource;
+import se.dandel.lednotification.EventType;
 
 import java.io.IOException;
-import java.net.DatagramPacket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -91,14 +90,14 @@ public class Button extends Application {
             udp.read(buffer, available);
             String eventStr = new String(buffer, 0, available, "UTF8");
             LOGGER.debug("Event received: " + eventStr);
-            Notification notification = parseNotification(eventStr);
-            LOGGER.debug("Notification {}", notification);
-            updateButtonState(notification);
+            Event event = parseNotification(eventStr);
+            LOGGER.debug("Event {}", event);
+            updateButtonState(event);
         }
 
         long currentTimeMillis = System.currentTimeMillis();
         if (lastFastBlinkTime + FAST_BLINK_MILLIS < currentTimeMillis) {
-            ledState.setIncomingCallOn(!ledState.isIncomingCallOn());
+            ledState.setAlertOn(!ledState.isAlertOn());
             lastFastBlinkTime = currentTimeMillis;
         }
         if (lastSlowBlinkTime + SLOW_BLINK_MILLIS < currentTimeMillis) {
@@ -106,11 +105,11 @@ public class Button extends Application {
             lastSlowBlinkTime = currentTimeMillis;
         }
 
-        if (!ledState.isIncomingCall() && ledState.isIncomingCallOn()) {
-            ledState.setIncomingCallOn(false);
+        if (!ledState.isAlert() && ledState.isAlertOn()) {
+            ledState.setAlertOn(false);
             b.allLedsOff();
         }
-        if (ledState.isIncomingCall()) {
+        if (ledState.isAlert()) {
             handleIncomingCall();
         } else {
             if (ledState.isCriticalPriorityNotification()) {
@@ -185,25 +184,23 @@ public class Button extends Application {
     }
 
     private void handleIncomingCall() {
-        if (ledState.isIncomingCallOn()) {
+        if (ledState.isAlertOn()) {
             b.allLedsOn(255, 0, 0);
         } else {
             b.allLedsOff();
         }
     }
 
-    private void updateButtonState(Notification notification) {
-        switch (notification.getNotificationType()) {
-            case INCOMING_CALL:
-                ledState.setIncomingCall(true);
+    private void updateButtonState(Event event) {
+        switch (event.getType()) {
+            case NEW_ALERT:
+                ledState.setAlert(true);
                 break;
-            case MISSED_CALL:
-            case DENIED_CALL:
-            case ANSWERED_CALL:
-                ledState.setIncomingCall(false);
+            case CANCEL_ALERT:
+                ledState.setAlert(false);
                 break;
             case NEW_NOTIFICATION:
-                switch(notification.getPriority()) {
+                switch(event.getPriority()) {
                     case CRITICAL:
                         ledState.increaseCriticalPriorityNotifications();
                         break;
@@ -218,8 +215,8 @@ public class Button extends Application {
                         break;
                 }
                 break;
-            case DISMISSED_NOTIFICATION:
-                switch(notification.getPriority()) {
+            case CANCEL_NOTIFICATION:
+                switch(event.getPriority()) {
                     case CRITICAL:
                         ledState.decreaseCriticalPriorityNotifications();
                         break;
@@ -248,15 +245,15 @@ public class Button extends Application {
         LOGGER.debug("Shutting down completed");
     }
 
-    private Notification parseNotification(String message) {
+    private Event parseNotification(String message) {
         String[] split = message.split(";");
-        NotificationSource source = new NotificationSource(split[0].split("=")[1]);
-        NotificationType type = NotificationType.valueOf(split[1].split("=")[1]);
+        EventSource source = new EventSource(split[0].split("=")[1]);
+        EventType type = EventType.valueOf(split[1].split("=")[1]);
         EventPriority priority = null;
         if(split.length > 2) {
             priority = EventPriority.valueOf(split[2].split("=")[1]);
         }
-        return new Notification(source, type, priority);
+        return new Event(source, type, priority);
     }
 
 }

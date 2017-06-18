@@ -2,23 +2,27 @@ package se.dandel.lednotification.button;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import se.dandel.lednotification.EventPriority;
 
 public class LedState {
-    private boolean incomingCallOn;
+    private boolean alertOn;
     private boolean notificationOn;
 
-    private boolean incomingCall;
+    private boolean alert;
+
+    private int[] priorityNotifications = new int[EventPriority.values().length];
+
     private int criticalPriorityNotifications;
     private int highPriorityNotifications;
     private int mediumPriorityNotifications;
     private int lowPriorityNotifications;
 
-    public void setIncomingCallOn(boolean incomingCallOn) {
-        this.incomingCallOn = incomingCallOn;
+    public void setAlertOn(boolean alertOn) {
+        this.alertOn = alertOn;
     }
 
-    public boolean isIncomingCallOn() {
-        return incomingCallOn;
+    public boolean isAlertOn() {
+        return alertOn;
     }
 
     public void setNotificationOn(boolean notificationOn) {
@@ -29,12 +33,12 @@ public class LedState {
         return notificationOn;
     }
 
-    public boolean isIncomingCall() {
-        return incomingCall;
+    public boolean isAlert() {
+        return alert;
     }
 
-    public void setIncomingCall(boolean incomingCall) {
-        this.incomingCall = incomingCall;
+    public void setAlert(boolean alert) {
+        this.alert = alert;
     }
 
     public boolean isCriticalPriorityNotification() {
