@@ -17,9 +17,9 @@ public class DroidController {
     @FXML
     private VBox rootPane;
     @FXML
-    private Button comingHomeButton;
+    private ToggleButton enteringWifiButton;
     @FXML
-    private Button leavingHomeButton;
+    private ToggleButton pingButton;
     @FXML
     private ToggleButton callNotificationButton;
     @FXML
@@ -123,28 +123,36 @@ public class DroidController {
         }
     }
 
-    public void handleComingHomeAction(ActionEvent actionEvent) {
+    public void handleEnteringWifiAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
-        comingHomeButton.disableProperty().set(true);
-        leavingHomeButton.disableProperty().set(false);
-        activateLeds();
-        service.enteringWifi(source);
+        pingButton.disableProperty().set(!enteringWifiButton.isSelected());
+        if (enteringWifiButton.isSelected()) {
+            pendingLeds();
+        } else {
+            inactivateLeds();
+        }
+        boolean ok = service.enteringWifi(source);
+        if (ok) {
+            activateLeds();
+        }
     }
 
-    public void handleLeavingHomeAction(ActionEvent actionEvent) {
+    public void handlePingAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
-        comingHomeButton.disableProperty().set(false);
-        leavingHomeButton.disableProperty().set(true);
-        inactivateLeds();
-        service.leavingWifi(source);
+        pendingLeds();
+        service.ping(source);
+    }
+
+    private void activateLeds() {
+        circleLed1.setFill(Color.GREEN);
     }
 
     private void inactivateLeds() {
         circleLed1.setFill(Color.DARKGRAY);
     }
 
-    private void activateLeds() {
-        circleLed1.setFill(Color.GREEN);
+    private void pendingLeds() {
+        circleLed1.setFill(Color.ORANGE);
     }
 
     private void setDisabledPropertyOnCallButtons(boolean disableIncomingCall) {

@@ -19,19 +19,19 @@
             <Insets top="10" right="25" bottom="10" left="25"/>
         </padding>
 
-        <Text text="Home/Away"
+        <Text text="Ping/Pong"
               GridPane.columnIndex="0" GridPane.rowIndex="0"
               GridPane.columnSpan="2"/>
-        <Button fx:id="comingHomeButton"
-                text="Coming home"
+        <ToggleButton fx:id="enteringWifiButton"
+                text="Entering wifi"
                 GridPane.columnIndex="0" GridPane.rowIndex="1"
-                onAction="#handleComingHomeAction"/>
+                onAction="#handleEnteringWifiAction"/>
 
-        <Button fx:id="leavingHomeButton"
-                text="Leaving home"
+        <ToggleButton fx:id="pingButton"
+                text="Ping"
                 disable="true"
                 GridPane.columnIndex="1" GridPane.rowIndex="1"
-                onAction="#handleLeavingHomeAction"/>
+                onAction="#handlePingAction"/>
 
     </GridPane>
 
@@ -102,15 +102,15 @@
                       GridPane.columnIndex="0" GridPane.rowIndex="1"
                       onAction="#handleCallNotificationAction"
         />
-        <ToggleButton fx:id="mailNotificationButton"
-                      text="Mail"
-                      GridPane.columnIndex="1" GridPane.rowIndex="1"
-                      onAction="#handleMailNotificationAction"
-        />
         <ToggleButton fx:id="messNotificationButton"
                       text="Mess"
-                      GridPane.columnIndex="2" GridPane.rowIndex="1"
+                      GridPane.columnIndex="1" GridPane.rowIndex="1"
                       onAction="#handleMessNotificationAction"
+        />
+        <ToggleButton fx:id="mailNotificationButton"
+                      text="Mail"
+                      GridPane.columnIndex="2" GridPane.rowIndex="1"
+                      onAction="#handleMailNotificationAction"
         />
         <ToggleButton fx:id="facebookNotificationButton"
                       text="Facebook"

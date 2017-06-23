@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 public class BroadcastSandboxListener {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
-    private static final String GROUP_IPADDRESS = "224.6.0.0";
+    private static final String GROUP_IPADDRESS = "224.0.0.1";
     private static final int PORT = 5001;
     private MulticastSocket socket;
 
