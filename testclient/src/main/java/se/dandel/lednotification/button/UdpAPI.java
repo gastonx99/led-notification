@@ -46,12 +46,12 @@ public class UdpAPI {
         throw new UnsupportedOperationException("Not implemented yet");
     }
 
-    public void write(String message) {
+    public void write(int sendingPort, String message) {
         try {
             String charset = "UTF8";
             byte[] buf = message.getBytes(charset);
             LOGGER.debug("Sending message using charset {}", charset);
-            DatagramPacket packet = new DatagramPacket(buf, buf.length, group, 5002);
+            DatagramPacket packet = new DatagramPacket(buf, buf.length, group, sendingPort);
             socket.send(packet);
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage(), e);
@@ -92,6 +92,7 @@ public class UdpAPI {
     }
 
     public void joinMulticast(IPAddress ipAddress) throws IOException {
+        LOGGER.debug("Joining multicast on {}", ipAddress.getAddress());
         group = InetAddress.getByName(ipAddress.getAddress());
         socket.joinGroup(group);
     }

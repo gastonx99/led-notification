@@ -150,7 +150,7 @@ public class ButtonService {
 
     private void sendPong() {
         LOGGER.debug("Sending pong");
-        udp.write("source=BUTTON TEST CLIENT;type=PONG");
+        udp.write(SENDING_PORT, "source=BUTTON TEST CLIENT;type=PONG");
     }
 
     private Event readEvent() throws IOException {

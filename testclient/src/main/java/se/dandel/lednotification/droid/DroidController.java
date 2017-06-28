@@ -117,7 +117,7 @@ public class DroidController {
     public void handleMessNotificationAction(ActionEvent actionEvent) {
         rootPane.requestFocus();
         if (messNotificationButton.isSelected()) {
-            service.newNotification(source,EventPriority.HIGH);
+            service.newNotification(source, EventPriority.HIGH);
         } else {
             service.dismissNotification(source, EventPriority.HIGH);
         }
@@ -131,10 +131,7 @@ public class DroidController {
         } else {
             inactivateLeds();
         }
-        boolean ok = service.enteringWifi(source);
-        if (ok) {
-            activateLeds();
-        }
+        service.enteringWifi(source, event -> activateLeds());
     }
 
     public void handlePingAction(ActionEvent actionEvent) {
@@ -167,4 +164,7 @@ public class DroidController {
         ledIndicatorBox.getChildren().add(circleLed1);
     }
 
+    public void shutdown() {
+        service.shutdown();
+    }
 }

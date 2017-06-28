@@ -4,6 +4,12 @@ public interface AlertSender {
 
     void send(Event event);
 
-    Event read(int timeout);
+    void startReading(Callback callback);
+
+    void stopReading();
+
+    public interface Callback {
+        void exeute(Event event);
+    }
 
 }

@@ -5,18 +5,20 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
-import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.SocketTimeoutException;
+import java.net.MulticastSocket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BroadcastingAlertSender implements AlertSender {
     private static final String GROUP_IPADDRESS = "224.0.0.1";
-    private static final int SENDING_PORT = 5001;
     private static final int RECEIVING_PORT = 5002;
+    private static final int SENDING_PORT = 5001;
 
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
-    private DatagramSocket socket;
+    private MulticastSocket socket;
     private InetAddress group;
+    private ExecutorService eventReaderExecutor;
 
     @Override
     public void send(Event event) {
@@ -24,43 +26,11 @@ public class BroadcastingAlertSender implements AlertSender {
         builder.append("source=" + event.getSource().getSource());
         builder.append(";");
         builder.append("type=" + event.getType());
-        if(event.getPriority() != null) {
+        if (event.getPriority() != null) {
             builder.append(";");
             builder.append("priority=" + event.getPriority());
         }
         send(builder.toString());
-    }
-
-    @Override
-    public Event read(int timeout) {
-        if (socket == null) {
-            initialize();
-        }
-        try {
-            byte[] buffer = new byte[512];
-            DatagramPacket p = new DatagramPacket(buffer, buffer.length);
-            socket.setSoTimeout(timeout);
-            socket.receive(p);
-            String eventStr = new String(buffer, 0, p.getLength(), "UTF8");
-            return parseEvent(eventStr);
-        } catch (SocketTimeoutException e) {
-            LOGGER.debug("Timeout while waiting for a read");
-            return null;
-        } catch (IOException e) {
-            LOGGER.error(e.getMessage(), e);
-            throw new RuntimeException(e.getMessage(), e);
-        }
-    }
-
-    private Event parseEvent(String message) {
-        String[] split = message.split(";");
-        EventSource source = new EventSource(split[0].split("=")[1]);
-        EventType type = EventType.valueOf(split[1].split("=")[1]);
-        EventPriority priority = null;
-        if(split.length > 2) {
-            priority = EventPriority.valueOf(split[2].split("=")[1]);
-        }
-        return new Event(source, type, priority);
     }
 
     private void send(String message) {
@@ -81,10 +51,65 @@ public class BroadcastingAlertSender implements AlertSender {
 
     private void initialize() {
         try {
-            socket = new DatagramSocket(RECEIVING_PORT);
+            socket = new MulticastSocket(RECEIVING_PORT);
             group = InetAddress.getByName(GROUP_IPADDRESS);
+            socket.joinGroup(group);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage(), e);
         }
     }
+
+    public void startReading(Callback callback) {
+        if (eventReaderExecutor != null) {
+            return;
+        }
+        if (socket == null) {
+            initialize();
+        }
+        LOGGER.debug("Setting up for reading events");
+        eventReaderExecutor = Executors.newSingleThreadExecutor();
+        eventReaderExecutor.submit(() -> {
+            try {
+                while (!socket.isClosed()) {
+                    byte[] buffer = new byte[512];
+                    DatagramPacket p = new DatagramPacket(buffer, buffer.length);
+                    socket.receive(p);
+                    String eventStr = new String(buffer, 0, p.getLength(), "UTF8");
+                    Event event = parseEvent(eventStr);
+                    LOGGER.debug("Received event {}", event);
+                    callback.exeute(event);
+                }
+                LOGGER.debug("End reading events");
+            } catch (IOException e) {
+                if (socket.isClosed()) {
+                    LOGGER.debug("Exception due to socket closed");
+                } else {
+                    LOGGER.error(e.getMessage(), e);
+                    throw new RuntimeException(e.getMessage(), e);
+                }
+            }
+        });
+    }
+
+    @Override
+    public void stopReading() {
+        if (eventReaderExecutor != null) {
+            LOGGER.debug("Shutting down executor");
+            socket.close();
+            eventReaderExecutor.shutdownNow();
+        }
+    }
+
+    private Event parseEvent(String message) {
+        String[] split = message.split(";");
+        EventSource source = new EventSource(split[0].split("=")[1]);
+        EventType type = EventType.valueOf(split[1].split("=")[1]);
+        EventPriority priority = null;
+        if (split.length > 2) {
+            priority = EventPriority.valueOf(split[2].split("=")[1]);
+        }
+        return new Event(source, type, priority);
+    }
+
+
 }

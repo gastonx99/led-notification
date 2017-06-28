@@ -47,21 +47,20 @@ public class SmartPhoneAlertService {
         alertSender.send(event);
     }
 
-    public boolean enteringWifi(EventSource source) {
+    public void enteringWifi(EventSource source, AlertSender.Callback callback) {
         Event event = Event.ping(source);
         LOGGER.debug("Entering wifi {}", event);
+        alertSender.startReading(callback);
         alertSender.send(event);
-
-        Event returnedEvent = alertSender.read(2000);
-        return returnedEvent != null && returnedEvent.getType() == EventType.PONG;
     }
 
-    public boolean ping(EventSource source) {
+    public void ping(EventSource source) {
         Event event = Event.ping(source);
         LOGGER.debug("Ping {}", event);
         alertSender.send(event);
-        Event returnedEvent = alertSender.read(2000);
-        return returnedEvent != null && returnedEvent.getType() == EventType.PONG;
     }
 
+    public void shutdown() {
+        alertSender.stopReading();
+    }
 }
