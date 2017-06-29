@@ -2,7 +2,9 @@ package se.dandel.lednotification;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import rx.Observable;
 
+import javax.inject.Inject;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
@@ -19,6 +21,9 @@ public class BroadcastingAlertSender implements AlertSender {
     private MulticastSocket socket;
     private InetAddress group;
     private ExecutorService eventReaderExecutor;
+
+    @Inject
+    private EventBus eventBus;
 
     @Override
     public void send(Event event) {
@@ -59,7 +64,7 @@ public class BroadcastingAlertSender implements AlertSender {
         }
     }
 
-    public void startReading(Callback callback) {
+    public void startReading() {
         if (eventReaderExecutor != null) {
             return;
         }
@@ -77,7 +82,7 @@ public class BroadcastingAlertSender implements AlertSender {
                     String eventStr = new String(buffer, 0, p.getLength(), "UTF8");
                     Event event = parseEvent(eventStr);
                     LOGGER.debug("Received event {}", event);
-                    callback.exeute(event);
+                    eventBus.send(event);
                 }
                 LOGGER.debug("End reading events");
             } catch (IOException e) {

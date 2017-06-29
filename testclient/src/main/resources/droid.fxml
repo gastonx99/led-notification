@@ -27,7 +27,7 @@
                 GridPane.columnIndex="0" GridPane.rowIndex="1"
                 onAction="#handleEnteringWifiAction"/>
 
-        <ToggleButton fx:id="pingButton"
+        <Button fx:id="pingButton"
                 text="Ping"
                 disable="true"
                 GridPane.columnIndex="1" GridPane.rowIndex="1"

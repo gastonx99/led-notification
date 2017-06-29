@@ -1,8 +1,5 @@
 package se.dandel.lednotification.droid;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-import com.google.inject.Module;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,15 +8,25 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import se.dandel.lednotification.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import rx.Observable;
+import se.dandel.lednotification.EventBus;
+import se.dandel.lednotification.EventPriority;
+import se.dandel.lednotification.EventSource;
+import se.dandel.lednotification.SmartPhoneAlertService;
+
+import javax.inject.Inject;
 
 public class DroidController {
+    private Logger LOGGER = LoggerFactory.getLogger(getClass());
+
     @FXML
     private VBox rootPane;
     @FXML
     private ToggleButton enteringWifiButton;
     @FXML
-    private ToggleButton pingButton;
+    private Button pingButton;
     @FXML
     private ToggleButton callNotificationButton;
     @FXML
@@ -39,18 +46,16 @@ public class DroidController {
     @FXML
     private Button missedCallButton;
 
+    @Inject
     private SmartPhoneAlertService service;
+
+    @Inject
+    private EventBus eventBus;
+
     private Circle circleLed1;
     private EventSource source = new EventSource("DROID TEST CLIENT");
 
     public DroidController() {
-        Module module = new AbstractModule() {
-            @Override
-            protected void configure() {
-                bind(AlertSender.class).to(BroadcastingAlertSender.class);
-            }
-        };
-        this.service = Guice.createInjector(module).getInstance(SmartPhoneAlertService.class);
     }
 
     @FXML
@@ -58,6 +63,10 @@ public class DroidController {
         rootPane.requestFocus();
         addLedIndicators();
         inactivateLeds();
+        eventBus.getEvents().subscribe(event1 -> {
+            LOGGER.debug("Observed event {}", event1);
+            activateLeds();
+        });
     }
 
     public void handleIncomingCallAction(ActionEvent actionEvent) {
@@ -131,7 +140,7 @@ public class DroidController {
         } else {
             inactivateLeds();
         }
-        service.enteringWifi(source, event -> activateLeds());
+        service.enteringWifi(source);
     }
 
     public void handlePingAction(ActionEvent actionEvent) {

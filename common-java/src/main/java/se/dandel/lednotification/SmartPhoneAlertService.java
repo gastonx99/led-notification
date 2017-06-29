@@ -47,10 +47,10 @@ public class SmartPhoneAlertService {
         alertSender.send(event);
     }
 
-    public void enteringWifi(EventSource source, AlertSender.Callback callback) {
+    public void enteringWifi(EventSource source) {
         Event event = Event.ping(source);
         LOGGER.debug("Entering wifi {}", event);
-        alertSender.startReading(callback);
+        alertSender.startReading();
         alertSender.send(event);
     }
 
