@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class BroadcastingAlertSender implements AlertSender {
-    private static final String GROUP_IPADDRESS = "224.0.0.1";
+    private static final String GROUP_IPADDRESS = "239.255.0.0";
     private static final int RECEIVING_PORT = 5002;
     private static final int SENDING_PORT = 5001;
 

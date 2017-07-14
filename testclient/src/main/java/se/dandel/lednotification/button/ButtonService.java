@@ -16,7 +16,7 @@ public class ButtonService {
     private static final long PING_MILLIS = 20000;
     private static final int RECEIVING_PORT = 5001;
     private static final int SENDING_PORT = 5002;
-    private static final String ADDRESS = "224.0.0.1";
+    private static final String ADDRESS = "239.255.0.0";
 
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
 

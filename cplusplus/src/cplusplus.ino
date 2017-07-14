@@ -11,7 +11,7 @@ using namespace std;
 #define PING_MILLIS 20000
 #define RECEIVING_PORT 5001
 #define SENDING_PORT 5002
-#define ADDRESS "224.0.0.1"
+#define ADDRESS "239.255.0.0"
 
 InternetButton b = InternetButton();
 UDP udp;
@@ -29,7 +29,7 @@ void setup() {
     udp.begin(RECEIVING_PORT);
     Serial.begin(9600);
     Serial.println(WiFi.localIP());
-    IPAddress multicastAddress(224,0,0,1);
+    IPAddress multicastAddress(239,255,0,0);
     udp.joinMulticast(multicastAddress);
 }
 
@@ -84,9 +84,13 @@ void updateLedState(MyEvent* event) {
           break;
       case NEW_NOTIFICATION:
           ledState.increaseNotifications(event->getPriority());
+          Serial.println("Increase notification with priority");
+          Serial.println(event->getPriority());
           break;
       case CANCEL_NOTIFICATION:
           ledState.decreaseNotifications(event->getPriority());
+          Serial.println("Decrease notification with priority");
+          Serial.println(event->getPriority());
           break;
       default:
           break;
