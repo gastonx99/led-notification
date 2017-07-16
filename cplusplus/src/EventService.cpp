@@ -1,7 +1,7 @@
 #include "spark_wiring_usbserial.h"
 
 #include "EventService.h"
-#include "MyEvent.h"
+#include "Event.h"
 
 namespace lednotification {
 
@@ -13,7 +13,7 @@ namespace lednotification {
         udp.joinMulticast(multicastAddress);
     }
 
-    MyEvent* EventService::parseEvent(char* message) {
+    Event* EventService::parseEvent(char* message) {
       char* sourcePart = std::strtok(message, ";");
       char* typePart = std::strtok(NULL, ";");
       char* priorityPart = std::strtok(NULL, ";");
@@ -21,14 +21,14 @@ namespace lednotification {
       char* type = std::strtok(NULL, std::strtok(typePart, "="));
       char* priority = priorityPart == NULL ? NULL : std::strtok(NULL, std::strtok(priorityPart, "="));
       if(priority == NULL) {
-        return new MyEvent(source, type);
+        return new Event(source, type);
       } else {
-        return new MyEvent(source, type, priority);
+        return new Event(source, type, priority);
       }
     }
 
-    MyEvent* EventService::readEvent() {
-      MyEvent* event = NULL;
+    Event* EventService::readEvent() {
+      Event* event = NULL;
       int available = udp.parsePacket();
       if (available > 0) {
         udp.read(buffer, available);

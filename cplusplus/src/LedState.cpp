@@ -1,23 +1,23 @@
 #include "spark_wiring_usbserial.h"
 #include "LedState.h"
-#include "MyEvent.h"
+#include "Event.h"
 
 namespace lednotification {
 
-    void LedState::update(MyEvent* event) {
+    void LedState::update(Event* event) {
       switch (event->getType()) {
-          case MyEventType::NEW_ALERT:
+          case EventType::NEW_ALERT:
               setAlert(true);
               break;
-          case MyEventType::CANCEL_ALERT:
+          case EventType::CANCEL_ALERT:
               setAlert(false);
               break;
-          case MyEventType::NEW_NOTIFICATION:
+          case EventType::NEW_NOTIFICATION:
               increaseNotifications(event->getPriority());
               Serial.println("Increase notification with priority");
               Serial.println(event->getPriority());
               break;
-          case MyEventType::CANCEL_NOTIFICATION:
+          case EventType::CANCEL_NOTIFICATION:
               decreaseNotifications(event->getPriority());
               Serial.println("Decrease notification with priority");
               Serial.println(event->getPriority());

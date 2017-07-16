@@ -2,7 +2,7 @@
 #include <InternetButton.h>
 #include "LedState.h"
 #include "EventService.h"
-#include "MyEvent.h"
+#include "Event.h"
 
 using namespace std;
 
@@ -70,19 +70,19 @@ void handleLeds() {
 }
 
 void handleNotificationOn() {
-    if (ledState.isNotification(lednotification::MyEventPriority::CRITICAL)) {
+    if (ledState.isNotification(lednotification::EventPriority::CRITICAL)) {
         b.ledOn(1, 255, 0, 0);
         b.ledOn(2, 255, 0, 0);
     }
-    if (ledState.isNotification(lednotification::MyEventPriority::HIGH)) {
+    if (ledState.isNotification(lednotification::EventPriority::HIGH)) {
         b.ledOn(4, 255, 140, 0);
         b.ledOn(5, 255, 140, 0);
     }
-    if (ledState.isNotification(lednotification::MyEventPriority::MEDIUM)) {
+    if (ledState.isNotification(lednotification::EventPriority::MEDIUM)) {
         b.ledOn(7, 255, 165, 0);
         b.ledOn(8, 255, 165, 0);
     }
-    if (ledState.isNotification(lednotification::MyEventPriority::LOW)) {
+    if (ledState.isNotification(lednotification::EventPriority::LOW)) {
         b.ledOn(10, 255, 255, 0);
         b.ledOn(11, 255, 255, 0);
     }
@@ -107,10 +107,10 @@ void handleAlertOn() {
 void loop(){
   long long currentTimeMillis = millis();
 
-  lednotification::MyEvent* event = eventService.readEvent();
+  lednotification::Event* event = eventService.readEvent();
   if(event != NULL) {
       lastSourceActivityTime = currentTimeMillis;
-      if(lednotification::MyEventType::PING == event->getType()) {
+      if(lednotification::EventType::PING == event->getType()) {
 //          eventService.sendPong();
       }
       ledState.update(event);
