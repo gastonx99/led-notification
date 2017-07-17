@@ -13,6 +13,23 @@ using namespace std;
 #define SENDING_PORT 5002
 #define ADDRESS "239.255.0.0"
 
+#define GREEN      0,255,0
+#define RED        255,0,0
+#define ORANGE     255,140,0
+#define YELLOW     255,255,0
+#define SKYBLUE    135,206,235
+#define SALMON     250,128,114
+#define LIGHTGREEN 144,238,144
+#define VIOLET     238,130,238
+
+#define CRITICAL_COLOR VIOLET
+#define HIGH_COLOR VIOLET
+#define MEDIUM_COLOR VIOLET
+#define LOW_COLOR VIOLET
+
+#define PING_COLOR LIGHTGREEN
+#define ALERT_COLOR SALMON
+
 InternetButton b = InternetButton();
 lednotification::EventService eventService = lednotification::EventService();
 lednotification::LedState ledState = lednotification::LedState();
@@ -31,7 +48,7 @@ void setup() {
 
 void handleLeds() {
   if(ledState.isPing()) {
-      b.ledOn(6, 0, 255, 0);
+      b.ledOn(6, PING_COLOR);
   } else {
       b.ledOff(6);
   }
@@ -71,37 +88,34 @@ void handleLeds() {
 
 void handleNotificationOn() {
     if (ledState.isNotification(lednotification::EventPriority::CRITICAL)) {
-        b.ledOn(1, 255, 0, 0);
-        b.ledOn(2, 255, 0, 0);
+        b.ledOn(1, CRITICAL_COLOR);
+        b.ledOn(2, CRITICAL_COLOR);
     }
     if (ledState.isNotification(lednotification::EventPriority::HIGH)) {
-        b.ledOn(4, 255, 140, 0);
-        b.ledOn(5, 255, 140, 0);
+        b.ledOn(4, HIGH_COLOR);
+        b.ledOn(5, HIGH_COLOR);
     }
     if (ledState.isNotification(lednotification::EventPriority::MEDIUM)) {
-        b.ledOn(7, 255, 165, 0);
-        b.ledOn(8, 255, 165, 0);
+        b.ledOn(7, MEDIUM_COLOR);
+        b.ledOn(8, MEDIUM_COLOR);
     }
     if (ledState.isNotification(lednotification::EventPriority::LOW)) {
-        b.ledOn(10, 255, 255, 0);
-        b.ledOn(11, 255, 255, 0);
+        b.ledOn(10, LOW_COLOR);
+        b.ledOn(11, LOW_COLOR);
     }
 }
 
 void handleAlertOn() {
-    int red = 255;
-    int green = 0;
-    int blue = 0;
-    b.ledOn(1, red, green, blue);
-    b.ledOn(2, red, green, blue);
-    b.ledOn(3, red, green, blue);
-    b.ledOn(4, red, green, blue);
-    b.ledOn(5, red, green, blue);
-    b.ledOn(7, red, green, blue);
-    b.ledOn(8, red, green, blue);
-    b.ledOn(9, red, green, blue);
-    b.ledOn(10, red, green, blue);
-    b.ledOn(11, red, green, blue);
+    b.ledOn(1, ALERT_COLOR);
+    b.ledOn(2, ALERT_COLOR);
+    b.ledOn(3, ALERT_COLOR);
+    b.ledOn(4, ALERT_COLOR);
+    b.ledOn(5, ALERT_COLOR);
+    b.ledOn(7, ALERT_COLOR);
+    b.ledOn(8, ALERT_COLOR);
+    b.ledOn(9, ALERT_COLOR);
+    b.ledOn(10, ALERT_COLOR);
+    b.ledOn(11, ALERT_COLOR);
 }
 
 void loop(){

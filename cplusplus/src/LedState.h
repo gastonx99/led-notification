@@ -29,7 +29,7 @@ namespace lednotification {
 
         void update(Event* event);
         void increaseNotifications(EventPriority p) { priorityNotifications[p]++; }
-        void decreaseNotifications(EventPriority p) { priorityNotifications[p]--; }
+        void decreaseNotifications(EventPriority p) { if(priorityNotifications[p] > 0) priorityNotifications[p]--; }
     };
 
 }
