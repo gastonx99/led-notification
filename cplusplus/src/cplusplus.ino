@@ -13,21 +13,29 @@ using namespace std;
 #define SENDING_PORT 5002
 #define ADDRESS "239.255.0.0"
 
-#define GREEN      0,255,0
-#define RED        255,0,0
-#define ORANGE     255,140,0
-#define YELLOW     255,255,0
-#define SKYBLUE    135,206,235
-#define SALMON     250,128,114
-#define LIGHTGREEN 144,238,144
-#define VIOLET     238,130,238
+#define GREEN       0,255,0
+#define RED         255,0,0
+#define ORANGE      255,140,0
+#define YELLOW      255,255,0
+#define SALMON      250,128,114
+#define CHOCOLATE   210,105,30
+#define LAWN_GREEN  124,252,0
+#define SANDY_BROWN 244,164,96
+#define TURQUOISE   64,224,208
 
-#define CRITICAL_COLOR VIOLET
-#define HIGH_COLOR VIOLET
-#define MEDIUM_COLOR VIOLET
-#define LOW_COLOR VIOLET
+// Funkar ej
+#define SKYBLUE     135,206,235
+#define LIGHTGREEN  144,238,144
+#define VIOLET      238,130,238
+#define KHAKI       240,230,140
+#define PALE_GREEN  152,251,152
 
-#define PING_COLOR LIGHTGREEN
+#define CRITICAL_COLOR SALMON
+#define HIGH_COLOR     CHOCOLATE
+#define MEDIUM_COLOR   TURQUOISE
+#define LOW_COLOR      SANDY_BROWN
+
+#define PING_COLOR LAWN_GREEN
 #define ALERT_COLOR SALMON
 
 InternetButton b = InternetButton();
