@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LedNotification</string>
+    <string name="incoming_call">Incoming</string>
+</resources>

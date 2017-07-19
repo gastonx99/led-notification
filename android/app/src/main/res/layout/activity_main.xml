@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="se.dandel.lednotification.MainActivity">
+
+    <TextView
+        android:id="@+id/notificationsTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Notifications"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="7dp" />
+
+    <ToggleButton
+        android:id="@+id/callNotificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textOff="Calls"
+        android:textOn="Calls"
+        android:onClick="callButtonClick"
+        app:layout_constraintLeft_toLeftOf="@+id/notificationsTextView"
+        app:layout_constraintTop_toBottomOf="@+id/notificationsTextView" />
+
+    <ToggleButton
+        android:id="@+id/messNotificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:textOff="Mess"
+        android:textOn="Mess"
+        android:onClick="messButtonClick"
+        app:layout_constraintLeft_toRightOf="@+id/callNotificationButton"
+        app:layout_constraintTop_toBottomOf="@+id/notificationsTextView" />
+
+    <ToggleButton
+        android:id="@+id/mailNotificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textOff="Mail"
+        android:textOn="Mail"
+        android:onClick="mailButtonClick"
+        app:layout_constraintLeft_toLeftOf="@+id/callNotificationButton"
+        app:layout_constraintTop_toBottomOf="@+id/callNotificationButton" />
+
+    <ToggleButton
+        android:id="@+id/facebookNotificationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textOff="FB"
+        android:textOn="FB"
+        android:onClick="facebookButtonClick"
+        app:layout_constraintLeft_toLeftOf="@+id/messNotificationButton"
+        app:layout_constraintTop_toBottomOf="@+id/messNotificationButton" />
+
+    <TextView
+        android:id="@+id/homeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Home"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mailNotificationButton" />
+
+    <Button
+        android:id="@+id/homeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Home"
+        android:onClick="homeButtonClick"
+        app:layout_constraintLeft_toLeftOf="@+id/homeTextView"
+        app:layout_constraintTop_toBottomOf="@+id/homeTextView" />
+
+    <Button
+        android:id="@+id/pingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Ping"
+        android:onClick="pingButtonClick"
+        app:layout_constraintLeft_toRightOf="@+id/homeButton"
+        app:layout_constraintTop_toBottomOf="@+id/homeTextView" />
+
+    <TextView
+        android:id="@+id/phoneTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginLeft="8dp"
+        android:text="Phone"
+        app:layout_constraintTop_toBottomOf="@+id/homeButton"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ToggleButton
+        android:id="@+id/incomingCallButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:textOff="Incoming"
+        android:textOn="@string/incoming_call"
+        android:onClick="incomingCallButtonClick"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTextView"
+        app:layout_constraintLeft_toLeftOf="@+id/phoneTextView"
+        tools:layout_editor_absoluteY="268dp" />
+
+    <Button
+        android:id="@+id/acceptCallButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:text="Accept"
+        android:onClick="acceptCallButtonClick"
+        app:layout_constraintTop_toBottomOf="@+id/phoneTextView"
+        app:layout_constraintLeft_toRightOf="@+id/incomingCallButton"
+        tools:layout_editor_absoluteY="268dp" />
+
+    <Button
+        android:id="@+id/missedCallButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Miss"
+        android:onClick="missedCallButtonClick"
+        app:layout_constraintLeft_toLeftOf="@+id/incomingCallButton"
+        app:layout_constraintTop_toBottomOf="@+id/incomingCallButton" />
+
+    <Button
+        android:id="@+id/denyCallButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Deny"
+        android:onClick="denyCallButtonClick"
+        app:layout_constraintLeft_toLeftOf="@+id/acceptCallButton"
+        app:layout_constraintTop_toBottomOf="@+id/acceptCallButton" />
+
+
+</android.support.constraint.ConstraintLayout>
