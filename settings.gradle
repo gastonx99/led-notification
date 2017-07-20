@@ -1,0 +1,8 @@
+rootProject.name = 'lednotification'
+include ':local-tools'
+include ':common-java'
+include ':testclient'
+
+project(':local-tools').projectDir = "$rootDir/local-tools" as File
+project(':common-java').projectDir = "$rootDir/common-java" as File
+project(':testclient').projectDir = "$rootDir/testclient" as File
