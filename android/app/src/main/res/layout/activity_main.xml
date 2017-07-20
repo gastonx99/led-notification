@@ -74,13 +74,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mailNotificationButton" />
 
-    <Button
+    <ToggleButton
         android:id="@+id/homeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Home"
+        android:textOff="Home"
+        android:textOn="Home"
         android:onClick="homeButtonClick"
         app:layout_constraintLeft_toLeftOf="@+id/homeTextView"
         app:layout_constraintTop_toBottomOf="@+id/homeTextView" />
