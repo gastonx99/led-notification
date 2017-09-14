@@ -22,8 +22,8 @@
 
     <modules>
         <module>local-tools</module>
-        <module>common-java</module>
-        <module>testclient</module>
+        <module>java/common-java</module>
+        <module>java/testclient</module>
     </modules>
     <dependencyManagement>
         <dependencies>

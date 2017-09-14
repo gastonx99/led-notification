@@ -43,7 +43,7 @@ public class Droid extends Application {
                 return injector.getInstance(type);
             }
         });
-        Parent root = loader.load();
+        Parent root = loader.load(); 
 
         Scene scene = new Scene(root, 500, 400);
 

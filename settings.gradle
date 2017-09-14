@@ -1,8 +1,11 @@
 rootProject.name = 'lednotification'
 include ':local-tools'
-include ':common-java'
-include ':testclient'
+include ':java:common-java'
+include ':java:testclient'
+//include ':android'
+//include ':android:app'
 
-project(':local-tools').projectDir = "$rootDir/local-tools" as File
-project(':common-java').projectDir = "$rootDir/common-java" as File
-project(':testclient').projectDir = "$rootDir/testclient" as File
+//project(':local-tools').projectDir = "$rootDir/local-tools" as File
+//project(':common-java').projectDir = "$rootDir/common-java" as File
+//project(':testclient').projectDir = "$rootDir/testclient" as File
+//project(':android').projectDir = "$rootDir/android" as File
