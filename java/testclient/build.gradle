@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     compile project(':java:common-java')
-    compile group: 'io.reactivex', name: 'rxjava', version: '1.3.0'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
-    compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.25'
+    compile("io.reactivex:rxjava:${ioReactivexRxjavaVersion}")
+    compile("org.slf4j:slf4j-api:${slf4jVersion}")
+    compile("org.slf4j:slf4j-log4j12:${slf4jVersion}")
 }
